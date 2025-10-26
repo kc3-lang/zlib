@@ -49,36 +49,36 @@ VER1=`echo ${VER}|sed -n -e 's/\([0-9]\{1,\}\)\\..*/\1/p'`
 
 # establish commands for library building
 if "${CROSS_PREFIX}ar" --version >/dev/null 2>/dev/null || test $? -lt 126; then
-    AR=${AR-"${CROSS_PREFIX}ar"}
+    : ${AR:="${CROSS_PREFIX}ar"}
     test -n "${CROSS_PREFIX}" && echo Using ${AR} | tee -a configure.log
 else
-    AR=${AR-"ar"}
+    : ${AR:="ar"}
     test -n "${CROSS_PREFIX}" && echo Using ${AR} | tee -a configure.log
 fi
-ARFLAGS=${ARFLAGS-"rc"}
+: ${ARFLAGS:="rc"}
 if "${CROSS_PREFIX}ranlib" --version >/dev/null 2>/dev/null || test $? -lt 126; then
-    RANLIB=${RANLIB-"${CROSS_PREFIX}ranlib"}
+    : ${RANLIB:="${CROSS_PREFIX}ranlib"}
     test -n "${CROSS_PREFIX}" && echo Using ${RANLIB} | tee -a configure.log
 else
-    RANLIB=${RANLIB-"ranlib"}
+    : ${RANLIB:="ranlib"}
 fi
 if "${CROSS_PREFIX}nm" --version >/dev/null 2>/dev/null || test $? -lt 126; then
-    NM=${NM-"${CROSS_PREFIX}nm"}
+    : ${NM:="${CROSS_PREFIX}nm"}
     test -n "${CROSS_PREFIX}" && echo Using ${NM} | tee -a configure.log
 else
-    NM=${NM-"nm"}
+    : ${NM:="nm"}
 fi
 
 # set defaults before processing command line options
-LDCONFIG=${LDCONFIG-"ldconfig"}
-LDSHAREDLIBC="${LDSHAREDLIBC--lc}"
+: ${LDCONFIG:="ldconfig"}
+: ${LDSHAREDLIBC:=-lc}
 ARCHS=
-prefix=${prefix-/usr/local}
-exec_prefix=${exec_prefix-'${prefix}'}
-libdir=${libdir-'${exec_prefix}/lib'}
-sharedlibdir=${sharedlibdir-'${libdir}'}
-includedir=${includedir-'${prefix}/include'}
-mandir=${mandir-'${prefix}/share/man'}
+: ${prefix:=/usr/local}
+: ${exec_prefix:='${prefix}'}
+: ${libdir:='${exec_prefix}/lib'}
+: ${sharedlibdir:='${libdir}'}
+: ${includedir:='${prefix}/include'}
+: ${mandir:='${prefix}/share/man'}
 shared_ext='.so'
 shared=1
 solo=0
